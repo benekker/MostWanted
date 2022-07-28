@@ -76,7 +76,7 @@ function mainMenu(person, people) {
             alert(personFamily);
             break;
         case "descendants":
-            //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
+            //! (done?) TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
             let personDescendants = findPersonDescendants(person[0], people);
             alert(personDescendants);
@@ -191,6 +191,7 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
+// function used to find spouse
 function findCurrentSpouse(person, people){
     let personsSpouse = people.find(function(potentialSpouse){
      return person.currentSpouse === potentialSpouse.id
@@ -198,6 +199,7 @@ function findCurrentSpouse(person, people){
     return personsSpouse
 }
 
+// function used to find parents
 function findPersonParents(person, people){
     let personsParents = person.parents.map(function(parentById){
         let personsParent = people.find(function(potentialParent){
@@ -207,6 +209,7 @@ function findPersonParents(person, people){
     })
     return personsParents
 }
+// function used to find siblings, looks for matching parent ids
 // (done?)Come back to add condition to elminate person from showing self as sibling
 function findSiblings(person, people){
     let personsSiblings = people.filter(function(potentialSibling){
@@ -222,6 +225,7 @@ function findSiblings(person, people){
         return personsSiblings
 }
 
+// function to check if a person exists, used when returning fields that may be null or empty arrays
 function doesPersonExist(person){
     if(person){
         return `${person.firstName} ${person.lastName}`
@@ -229,7 +233,7 @@ function doesPersonExist(person){
     return 'Person not found'
 }
 
-
+// Spouse/Parent/Siblings functions called to return as 1 family :)
 function findPersonFamily(person, people){
     let spouse = findCurrentSpouse(person, people)
     let parents = findPersonParents(person, people)
@@ -240,15 +244,33 @@ function findPersonFamily(person, people){
     \n Siblings: ${siblings.map(sibling => `${sibling.firstName} ${sibling.lastName}`).join(', ')} `
 }
 
-
-function findPersonChildren(person, people){
-    
-}
-
-
 function findPersonDescendants(person, people){
-    let personDescendants
+    let descendants = []
+
+    function findPersonChildren(person){
+        let personsChildren = people.filter(function(potentialChild){
+            if(potentialChild.parents.includes(person.id)){
+                return true
+            }
+            else{
+                return false
+            }
+        })
+        if(personsChildren.length > 0){
+            for(let i = 0; i < personsChildren.length; i++){
+                descendants.push(personsChildren[i])
+                findPersonChildren(personsChildren[i])
+            }
+        }
+        else{
+            return 'No children found'
+        }
+    }
+    findPersonChildren(person)
+    return `Descendants: ${descendants.map(descendant => `${descendant.firstName} ${descendant.lastName}`).join(', ')}`
 }
+
+
 
 
 
