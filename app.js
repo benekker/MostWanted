@@ -191,3 +191,80 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
+function findCurrentSpouse(person, people){
+    let personsSpouse = people.find(function(potentialSpouse){
+     return person.currentSpouse === potentialSpouse.id
+    })
+    return personsSpouse
+}
+
+function findPersonParents(person, people){
+    let personsParents = person.parents.map(function(parentById){
+        let personsParent = people.find(function(potentialParent){
+            return parentById === potentialParent.id
+           })
+           return personsParent
+    })
+    return personsParents
+}
+
+function findSiblings(person, people){
+    let personsSiblings = people.filter(function(potentialSibling){
+        let hasCommonParent = false
+        for( let i = 0; i < potentialSibling.parents.length; i++){
+            if(person.parents.includes(potentialSibling.parents[i])){
+                hasCommonParent = true
+            }
+        }
+        return hasCommonParent
+    })
+        return personsSiblings
+}
+
+function doesPersonExist(person){
+    if(person){
+        return `${person.firstName} ${person.lastName}`
+    }
+    return 'Person not found'
+}
+
+
+function findPersonFamily(person, people){
+    let spouse = findCurrentSpouse(person, people)
+    let parents = findPersonParents(person, people)
+    let siblings = findSiblings(person, people)
+
+    return `Current Spouse: ${doesPersonExist(spouse)}
+    \n Parents: ${parents.map(parent => `${parent.firstName} ${parent.lastName}`).join(', ')}
+    \n Siblings: ${siblings.map(sibling => `${sibling.firstName} ${sibling.lastName}`).join(', ')} `
+}
+
+
+function findPersonDescendants(person, people){
+    let personDescendants
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// function searchByTraits(){
+// let userInputTraits = prompt("Which traits would you like to search for? 'gender', 'eyecolor', 'occupation', 'height', 'weight'. Please separate traits with a single space.");
+// if (userInputTraits.includes('gender'));
+//     let userInputGender = prompt('Which gender would you like to search for?');
+//     let personByGender = data.filter(function(person){
+//         if(person.gender === userInputGender){
+//             return true
+//         }
+//         else{
+//             return false
+//         }
+//     })
+// }
