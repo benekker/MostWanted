@@ -207,7 +207,7 @@ function findPersonParents(person, people){
     })
     return personsParents
 }
-
+// Come back to add condition to elminate person from showing self as sibling
 function findSiblings(person, people){
     let personsSiblings = people.filter(function(potentialSibling){
         let hasCommonParent = false
