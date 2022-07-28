@@ -64,13 +64,13 @@ function mainMenu(person, people) {
     // Routes our application based on the user's input
     switch (displayOption) {
         case "info":
-            //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
+            //! (done?) TODO #1: Utilize the displayPerson function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
             let personInfo = displayPerson(person[0]);
             alert(personInfo);
             break;
         case "family":
-            //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
+            //! (done?) TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = findPersonFamily(person[0], people);
             alert(personFamily);
@@ -207,12 +207,13 @@ function findPersonParents(person, people){
     })
     return personsParents
 }
-// Come back to add condition to elminate person from showing self as sibling
+// (done?)Come back to add condition to elminate person from showing self as sibling
 function findSiblings(person, people){
     let personsSiblings = people.filter(function(potentialSibling){
         let hasCommonParent = false
         for( let i = 0; i < potentialSibling.parents.length; i++){
             if(person.parents.includes(potentialSibling.parents[i])){
+                if(person != potentialSibling)
                 hasCommonParent = true
             }
         }
@@ -237,6 +238,11 @@ function findPersonFamily(person, people){
     return `Current Spouse: ${doesPersonExist(spouse)}
     \n Parents: ${parents.map(parent => `${parent.firstName} ${parent.lastName}`).join(', ')}
     \n Siblings: ${siblings.map(sibling => `${sibling.firstName} ${sibling.lastName}`).join(', ')} `
+}
+
+
+function findPersonChildren(person, people){
+    
 }
 
 
