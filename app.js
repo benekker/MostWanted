@@ -27,11 +27,14 @@ function app(people) {
     switch (searchType) {
         case "yes":
             searchResults = searchByName(people);
+            mainMenu(searchResults, people);
             break;
         case "no":
             //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
                 //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
             searchResults = searchByTraits(people);
+            alert(searchResults)
+            app(people)
             break;
         default:
             // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -39,7 +42,7 @@ function app(people) {
             break;
     }
     // Calls the mainMenu() only AFTER we find the SINGLE PERSON
-    mainMenu(searchResults, people);
+    
 }
 // End of app()
 
@@ -272,27 +275,26 @@ function findPersonDescendants(person, people){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// function searchByTraits(){
-// let userInputTraits = prompt("Which traits would you like to search for? 'gender', 'eyecolor', 'occupation', 'height', 'weight'. Please separate traits with a single space.");
-// if (userInputTraits.includes('gender'));
-//     let userInputGender = prompt('Which gender would you like to search for?');
-//     let personByGender = data.filter(function(person){
-//         if(person.gender === userInputGender){
-//             return true
-//         }
-//         else{
-//             return false
-//         }
-//     })
-// }
+function searchByTraits(people){
+    let userInputTraits = prompt('Which traits would you like to search for?')
+    let parts = userInputTraits.split(';')
+    let instructionsArray = parts.map(function(traitValue){
+        let[searchTrait, searchValue] = traitValue.trim().split(/\s+/)
+        return{
+            trait : searchTrait.trim(),
+            value : searchValue.trim()
+        }
+    })
+    let personMatch = people.filter(function(potentialMatch){
+        let isMatch = true
+        for(let i = 0; i < instructionsArray.length; i++){
+            let currentInstruction = instructionsArray[i]
+            if(potentialMatch[currentInstruction.trait] != currentInstruction.value){
+                isMatch = false
+                break
+            }
+        }
+        return isMatch
+    })
+    return  `${personMatch.map(match => `${match.firstName} ${match.lastName}`).join(', ')}`
+}
