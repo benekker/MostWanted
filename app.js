@@ -194,7 +194,7 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
-// function used to find spouse
+// function used to find spouse, find returns first instance match
 function findCurrentSpouse(person, people){
     let personsSpouse = people.find(function(potentialSpouse){
      return person.currentSpouse === potentialSpouse.id
@@ -274,12 +274,12 @@ function findPersonDescendants(person, people){
 }
 
 
-
+// regex expression and trim used to remove extra spaces from user input
 function searchByTraits(people){
-    let userInputTraits = prompt('Which traits would you like to search for?')
+    let userInputTraits = prompt('Which traits would you like to search for? Please seperate entries by ";". Example(eyeColor blue; gender female)')
     let parts = userInputTraits.split(';')
     let instructionsArray = parts.map(function(traitValue){
-        let[searchTrait, searchValue] = traitValue.trim().split(/\s+/)
+        let[searchTrait, searchValue] = traitValue.trim().split(/\s+/)      
         return{
             trait : searchTrait.trim(),
             value : searchValue.trim()
